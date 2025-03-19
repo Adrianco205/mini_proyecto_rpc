@@ -1,14 +1,34 @@
-from xmlrpc.server import SimpleXMLRPCServer #permite crear un servidor RPC en Python.
+from xmlrpc.server import SimpleXMLRPCServer  # Servidor RPC en Python
 
 # Crear el servidor en localhost y puerto 8000
 server = SimpleXMLRPCServer(("localhost", 8000))
+print("Servidor RPC en ejecución en el puerto 8000...")
 
-# Definir la función remota
+# Definir múltiples funciones remotas
 def sumar(a, b):
+    print(f"Sumando {a} + {b}")
     return a + b
 
-# Registrar la función en el servidor para que pueda ser llamada por un cliente
-server.register_function(sumar, "sumar")
+def restar(a, b):
+    print(f"Restando {a} - {b}")
+    return a - b
 
-print("Servidor RPC en ejecución en el puerto 8000...")
-server.serve_forever()  # Mantiene el servidor activo
+def multiplicar(a, b):
+    print(f"Multiplicando {a} * {b}")
+    return a * b
+
+def dividir(a, b):
+    if b == 0:
+        print("Error: División por cero")
+        return "Error: División por cero"
+    print(f"Dividiendo {a} / {b}")
+    return a / b
+
+# Registrar funciones en el servidor
+server.register_function(sumar, "sumar")
+server.register_function(restar, "restar")
+server.register_function(multiplicar, "multiplicar")
+server.register_function(dividir, "dividir")
+
+# Iniciar servidor
+server.serve_forever()
